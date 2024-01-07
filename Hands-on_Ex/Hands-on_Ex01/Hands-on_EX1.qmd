@@ -15,15 +15,77 @@ In this section, I will install and load tidyverse and sf packages.
 pacman::p_load(tidyverse, sf)
 ```
 
-## Importing a geospatial data in shapefile format.
+## Importing a polygon feature data in shapefile format.
+
+### Importing MasterPlan data
 
 ```{r}
 mpsz <- st_read(dsn = "data/geospatial",
                 layer = "MP14_SUBZONE_WEB_PL")
 ```
 
+### Importing Cycling Path data
+
+```{r}
+cyclingpath <- st_read(dsn = "data/geospatial",
+                layer = "CyclingPathGazette"
+)
+```
+
+### Importing GIS data in kml format
+
+```{r}
+preschool <- st_read(dsn="data/geospatial/PreSchoolsLocation.kml")
+```
+
+
 ## Plotting the geospatial data
 
 ```{r}
 plot(mpsz)
+
+plot(st_geometry(mpsz))
+
+plot(mpsz["PLN_AREA_N"])
+
+```
+
+Correcting the coordinate system
+```{r}
+
+st_crs(mpsz)
+
+mpsz3414 <- st_set_crs(mpsz, 3414)
+
+st_crs(mpsz3414)
+
+```
+## Transforming the projection of preschool from wgs84 to svy21.
+
+```{r}
+preschool3414 <- st_transform(preschool, 
+                              crs = 3414)
+```
+
+## Importing Aspatial data
+
+```{r}
+listings <- read_csv("data/aspatial/listings.csv")
+
+list(listings) 
+
+listings_sf <- st_as_sf(listings, 
+                       coords = c("longitude", "latitude"),
+                       crs=4326) %>%
+  st_transform(crs = 3414)
+```
+
+## Buffering
+
+```{r}
+
+buffer_cycling <- st_buffer(cyclingpath, 
+                               dist=5, nQuadSegs = 30)
+buffer_cycling$AREA <- st_area(buffer_cycling)
+sum(buffer_cycling$AREA)
 ```
