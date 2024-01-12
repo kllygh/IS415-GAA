@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-01-07">
+<meta name="dcterms.date" content="2024-01-12">
 
 <title>IS415-GAA - Hands-on Exercise 1</title>
 <style>
@@ -134,6 +134,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-in-class-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">In-class Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-in-class-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../In-class_Ex/In-class_Ex01/In-class_Ex01.html">
+ <span class="dropdown-text">In-class Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-personal-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Personal Notes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-personal-notes">    
+        <li>
+    <a class="dropdown-item" href="../../Personal_notes/Personal_notes_Week1/Personal_notes_week1.html">
+ <span class="dropdown-text">Personal Notes Week 1</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
@@ -160,20 +182,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting Started</a>
+  <li><a href="#agenda" id="toc-agenda" class="nav-link active" data-scroll-target="#agenda">Agenda</a></li>
+  <li><a href="#data-acquisition" id="toc-data-acquisition" class="nav-link" data-scroll-target="#data-acquisition">Data Acquisition</a></li>
+  <li><a href="#understanding-the-different-files" id="toc-understanding-the-different-files" class="nav-link" data-scroll-target="#understanding-the-different-files">Understanding the different files</a>
   <ul class="collapse">
-  <li><a href="#installing-and-loading-r-packages" id="toc-installing-and-loading-r-packages" class="nav-link" data-scroll-target="#installing-and-loading-r-packages">Installing and Loading R packages</a></li>
-  <li><a href="#importing-a-polygon-feature-data-in-shapefile-format." id="toc-importing-a-polygon-feature-data-in-shapefile-format." class="nav-link" data-scroll-target="#importing-a-polygon-feature-data-in-shapefile-format.">Importing a polygon feature data in shapefile format.</a>
+  <li><a href="#esri-shapefile-format" id="toc-esri-shapefile-format" class="nav-link" data-scroll-target="#esri-shapefile-format">ESRI Shapefile Format</a></li>
+  <li><a href="#kml-file" id="toc-kml-file" class="nav-link" data-scroll-target="#kml-file">kml File</a></li>
+  <li><a href="#understanding-the-difference-between-esri-shapefile-and-kml" id="toc-understanding-the-difference-between-esri-shapefile-and-kml" class="nav-link" data-scroll-target="#understanding-the-difference-between-esri-shapefile-and-kml">Understanding the difference between ESRI Shapefile and KML</a></li>
+  </ul></li>
+  <li><a href="#understanding-sf-packages-and-tidyverse" id="toc-understanding-sf-packages-and-tidyverse" class="nav-link" data-scroll-target="#understanding-sf-packages-and-tidyverse">Understanding SF packages and Tidyverse</a></li>
+  <li><a href="#simple-feature-packages" id="toc-simple-feature-packages" class="nav-link" data-scroll-target="#simple-feature-packages">Simple Feature Packages</a>
   <ul class="collapse">
-  <li><a href="#importing-masterplan-data" id="toc-importing-masterplan-data" class="nav-link" data-scroll-target="#importing-masterplan-data">Importing MasterPlan data</a></li>
-  <li><a href="#importing-cycling-path-data" id="toc-importing-cycling-path-data" class="nav-link" data-scroll-target="#importing-cycling-path-data">Importing Cycling Path data</a></li>
-  <li><a href="#importing-gis-data-in-kml-format" id="toc-importing-gis-data-in-kml-format" class="nav-link" data-scroll-target="#importing-gis-data-in-kml-format">Importing GIS data in kml format</a></li>
+  <li><a href="#p_load" id="toc-p_load" class="nav-link" data-scroll-target="#p_load">p_load</a></li>
+  <li><a href="#st_read" id="toc-st_read" class="nav-link" data-scroll-target="#st_read">st_read</a></li>
+  <li><a href="#st_geometry" id="toc-st_geometry" class="nav-link" data-scroll-target="#st_geometry">st_geometry()</a></li>
+  <li><a href="#projection-transformation" id="toc-projection-transformation" class="nav-link" data-scroll-target="#projection-transformation">Projection transformation</a>
+  <ul class="collapse">
+  <li><a href="#st_crs" id="toc-st_crs" class="nav-link" data-scroll-target="#st_crs">st_crs()</a></li>
+  <li><a href="#st_set_crs" id="toc-st_set_crs" class="nav-link" data-scroll-target="#st_set_crs">st_set_crs()</a></li>
+  <li><a href="#st_transform" id="toc-st_transform" class="nav-link" data-scroll-target="#st_transform">st_transform()</a></li>
   </ul></li>
-  <li><a href="#plotting-the-geospatial-data" id="toc-plotting-the-geospatial-data" class="nav-link" data-scroll-target="#plotting-the-geospatial-data">Plotting the geospatial data</a></li>
-  <li><a href="#transforming-the-projection-of-preschool-from-wgs84-to-svy21." id="toc-transforming-the-projection-of-preschool-from-wgs84-to-svy21." class="nav-link" data-scroll-target="#transforming-the-projection-of-preschool-from-wgs84-to-svy21.">Transforming the projection of preschool from wgs84 to svy21.</a></li>
-  <li><a href="#importing-aspatial-data" id="toc-importing-aspatial-data" class="nav-link" data-scroll-target="#importing-aspatial-data">Importing Aspatial data</a></li>
-  <li><a href="#buffering" id="toc-buffering" class="nav-link" data-scroll-target="#buffering">Buffering</a></li>
   </ul></li>
+  <li><a href="#tidyverse-packages" id="toc-tidyverse-packages" class="nav-link" data-scroll-target="#tidyverse-packages">Tidyverse Packages</a>
+  <ul class="collapse">
+  <li><a href="#glimpse-dplyr-package" id="toc-glimpse-dplyr-package" class="nav-link" data-scroll-target="#glimpse-dplyr-package">glimpse() dplyr package</a></li>
+  <li><a href="#read_csv-from-readr-package" id="toc-read_csv-from-readr-package" class="nav-link" data-scroll-target="#read_csv-from-readr-package">read_csv() from readr package</a></li>
+  <li><a href="#list-of-base-r" id="toc-list-of-base-r" class="nav-link" data-scroll-target="#list-of-base-r">list() of base R</a></li>
+  <li><a href="#creating-a-simple-feature-data-frame-from-an-aspatial-data-frame" id="toc-creating-a-simple-feature-data-frame-from-an-aspatial-data-frame" class="nav-link" data-scroll-target="#creating-a-simple-feature-data-frame-from-an-aspatial-data-frame">Creating a simple feature data frame from an aspatial data frame</a>
+  <ul class="collapse">
+  <li><a href="#st_as_sf-sf-package" id="toc-st_as_sf-sf-package" class="nav-link" data-scroll-target="#st_as_sf-sf-package">st_as_sf() sf package</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#plotting-maps" id="toc-plotting-maps" class="nav-link" data-scroll-target="#plotting-maps">Plotting maps</a>
+  <ul class="collapse">
+  <li><a href="#plotting-geospatial-maps" id="toc-plotting-geospatial-maps" class="nav-link" data-scroll-target="#plotting-geospatial-maps">Plotting geospatial maps</a></li>
+  </ul></li>
+  <li><a href="#geoprocessing-with-sf-package" id="toc-geoprocessing-with-sf-package" class="nav-link" data-scroll-target="#geoprocessing-with-sf-package">Geoprocessing with sf package</a>
+  <ul class="collapse">
+  <li><a href="#buffer" id="toc-buffer" class="nav-link" data-scroll-target="#buffer">Buffer</a>
+  <ul class="collapse">
+  <li><a href="#st_buffer" id="toc-st_buffer" class="nav-link" data-scroll-target="#st_buffer">st_buffer()</a></li>
+  <li><a href="#st_area" id="toc-st_area" class="nav-link" data-scroll-target="#st_area">st_area()</a></li>
+  <li><a href="#sum" id="toc-sum" class="nav-link" data-scroll-target="#sum">sum()</a></li>
+  </ul></li>
+  <li><a href="#point-in-polygon-count" id="toc-point-in-polygon-count" class="nav-link" data-scroll-target="#point-in-polygon-count">Point-in-polygon count</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
   </ul>
 </nav>
     </div>
@@ -193,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 7, 2024</p>
+      <p class="date">January 12, 2024</p>
     </div>
   </div>
   
@@ -205,26 +263,181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="getting-started" class="level1">
-<h1>Getting Started</h1>
-<section id="installing-and-loading-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="installing-and-loading-r-packages">Installing and Loading R packages</h2>
-<p>In this section, I will install and load tidyverse and sf packages.</p>
+<section id="agenda" class="level1">
+<h1>Agenda</h1>
+<ul>
+<li>Data acquistion</li>
+<li>Understanding the different files</li>
+<li>Simple Feature Packages</li>
+<li>Tidyverse Packages</li>
+<li>Plotting maps</li>
+</ul>
+</section>
+<section id="data-acquisition" class="level1">
+<h1>Data Acquisition</h1>
+<p>Collecting information from these website below:</p>
+<ul>
+<li><p>data.gov.sg</p></li>
+<li><p>https://datamall.lta.gov.sg/content/datamall/en.html</p></li>
+<li><p>http://insideairbnb.com/get-the-data/</p></li>
+</ul>
+<p>Understanding the difference between geospatial and aspatial data:</p>
+<ol type="1">
+<li><p>Geospatial Data:</p>
+<ul>
+<li><p>Definition: Geospatial data, also known as spatial data, refers to information that has a geographic or spatial component. It involves the representation of objects, features, or phenomena that exist in or on the Earth’s surface and can be located relative to a coordinate system.</p></li>
+<li><p>Examples: Maps, GPS coordinates, satellite imagery, shapefiles, and any data associated with a specific location on the Earth.</p></li>
+</ul></li>
+<li><p>Aspatial Data:</p>
+<ul>
+<li><p>Definition: Aspatial data, also known as non-spatial data, lacks a specific geographic or spatial component. It includes information that is not inherently tied to a particular location on the Earth’s surface.</p></li>
+<li><p>Examples: Tabular data, spreadsheets, demographic information, temperature readings, and any data that doesn’t inherently involve spatial coordinates.</p></li>
+</ul></li>
+</ol>
+<p>To summarise, the difference lies in whether or not the data is tied to geographical location.</p>
+</section>
+<section id="understanding-the-different-files" class="level1">
+<h1>Understanding the different files</h1>
+<p>Below are the different files:</p>
+<ol type="1">
+<li><p>ESRI shapefile format</p></li>
+<li><p>kml file</p></li>
+</ol>
+<section id="esri-shapefile-format" class="level2">
+<h2 class="anchored" data-anchor-id="esri-shapefile-format">ESRI Shapefile Format</h2>
+<p>The ESRI Shapefile format is a popular geospatial vector data format developed by ESRI (Environmental Systems Research Institute), a company that provides Geographic Information System (GIS) software and solutions. The shapefile format is widely used for storing and exchanging geospatial data, and it has become a de facto standard in the GIS community.</p>
+<p>Understanding components of ESRI Shapefile:</p>
+<ol type="1">
+<li>Geometry Types:
+<ul>
+<li>A shapefile can store different types of vector geometries, including points, lines (or polylines), and polygons. Each geometry type is associated with a set of coordinates that define the shape’s location and structure.</li>
+</ul></li>
+<li>Attribute Data:
+<ul>
+<li>In addition to the spatial information, shapefiles can contain attribute data associated with each spatial feature. This attribute data is typically stored in a separate database file (.dbf) and can include information such as names, IDs, or any other descriptive attributes for the features.</li>
+</ul></li>
+<li>Multiple Files:
+<ul>
+<li>A complete shapefile dataset consists of several files with different extensions. The main files include: <strong>.shp</strong>: Contains the geometry information. <strong>.shx</strong>: Contains the shape index data. <strong>.dbf</strong>: Stores attribute data in a tabular format. <strong>.prj</strong>: Specifies the coordinate system and projection information. Other auxiliary files (.<strong>sbn, .sbx, .shp.xml,</strong> etc.) may also be present.</li>
+</ul></li>
+<li>Projection Information:
+<ul>
+<li>The shapefile format allows for the inclusion of projection information in the .prj file, <strong>specifying the coordinate system and projection used for the spatial data</strong>. This ensures that spatial features are correctly located on the Earth’s surface.</li>
+</ul></li>
+<li>Compatibility:
+<ul>
+<li>Shapefiles are widely supported by various GIS software packages, making them easy to share and exchange among different systems. Many GIS applications, including ESRI’s ArcGIS, QGIS, and others, can read and write shapefiles.</li>
+</ul></li>
+</ol>
+<p>To work with shapefiles in R, you can use the sf package, as mentioned in a previous response. The sf package provides functions for reading, writing, and manipulating spatial data in the form of simple features, and it is compatible with the ESRI shapefile format.</p>
+</section>
+<section id="kml-file" class="level2">
+<h2 class="anchored" data-anchor-id="kml-file">kml File</h2>
+<p>A KML (Keyhole Markup Language) file is a type of XML (eXtensible Markup Language) file format used to express geographic annotation and visualization within three-dimensional Earth browsers. KML files are commonly associated with mapping applications, GIS (Geographic Information System) software, and online mapping services. The format was developed by Keyhole Inc., which was later acquired by Google.</p>
+<p>Key features of KML files include:</p>
+<ol type="1">
+<li><p>Geospatial Information:</p>
+<ul>
+<li>KML files are used to represent geospatial data, including points, lines, polygons, and images, on the Earth’s surface. They can contain information such as coordinates, placemarks, paths, and 3D models.</li>
+</ul></li>
+<li><p>XML Structure:</p>
+<ul>
+<li>KML files are XML documents, meaning they use a <strong>hierarchical structure of tags</strong> to organize and describe geographic information. The XML format makes it human-readable and easy to parse by machines.</li>
+</ul></li>
+<li><p>Placemarks and Features:</p>
+<ul>
+<li>KML files often include placemarks, which mark specific points on the Earth’s surface and may include additional information such as names, descriptions, and styles. Other features like paths and polygons are also commonly used to represent linear features or enclosed areas.</li>
+</ul></li>
+<li><p>Styling and Visualization:</p>
+<ul>
+<li>KML supports the <strong>styling of features</strong>, allowing users to define the appearance of points, lines, and polygons. This includes specifying colors, icons, labels, and other visual attributes.</li>
+</ul></li>
+<li><p>Compatibility:</p>
+<ul>
+<li>KML is widely supported by various mapping and GIS applications, including Google Earth, Google Maps, and many other GIS software packages. This makes it a common choice for sharing geographic data.</li>
+</ul></li>
+<li><p>Extension Support:</p>
+<ul>
+<li>KML supports extensions, allowing users to include additional custom data and attributes beyond the core KML specification. This flexibility makes it suitable for various applications and use cases. To view or interact with KML files, you can use tools like Google Earth, which provides a user-friendly interface for exploring geospatial data in a 3D environment. Many GIS software packages also support the import and export of KML files, allowing for integration into broader geospatial workflows.</li>
+</ul></li>
+</ol>
+<p>In R, you can use packages like sf or plotKML to work with KML files and integrate them into your geospatial analyses and visualizations.</p>
+</section>
+<section id="understanding-the-difference-between-esri-shapefile-and-kml" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-difference-between-esri-shapefile-and-kml">Understanding the difference between ESRI Shapefile and KML</h2>
+<p>KML (Keyhole Markup Language) and Shapefile are both file formats used for storing and exchanging geospatial data, but they have some key differences in terms of structure, capabilities, and use cases.</p>
+<p>Here’s a comparison between KML and Shapefile:</p>
+<ol type="1">
+<li><p>File Format and Structure:</p>
+<ul>
+<li><p>KML: KML is an XML-based file format. It uses tags and attributes to represent geographic features, attributes, and styling information. KML files are human-readable and can be easily edited with a text editor. They are well-suited for representing geographic data in a <strong>hierarchical and descriptive manner.</strong></p></li>
+<li><p>Shapefile: A Shapefile is a set of files with different extensions (.shp, .shx, .dbf, .prj, etc.) that collectively store both <strong>spatial and attribute data.</strong> The .shp file contains geometric data, while the .dbf file stores attribute data in a tabular format. The shapefile format is more structured and relies on binary files for geometry.</p></li>
+</ul></li>
+<li><p>Geometry Types:</p>
+<ul>
+<li><p>KML: Supports points, lines, polygons, 3D models, and other geometries. It is versatile and can represent both <strong>2D and 3D spatial features</strong>.</p></li>
+<li><p>Shapefile: Supports points, lines, and polygons, but <strong>does not inherently support 3D geometries</strong>. It’s primarily used for 2D vector data.</p></li>
+</ul></li>
+<li><p>Attributes and Database:</p>
+<ul>
+<li><p>KML: Attributes are included within the KML file itself, typically in a <data> element or as attributes of specific features. The structure is <strong>less rigid, and attributes can be added flexibly</strong>.</data></p></li>
+<li><p>Shapefile: Attribute data is stored in a separate .dbf file. The tabular structure allows for a more organized representation of attribute information.</p></li>
+</ul></li>
+<li><p>Styling and Visualization:</p>
+<ul>
+<li><p>KML: Provides rich styling options, allowing users to define colors, icons, labels, and other visual attributes for individual features. Styling information is often embedded within the KML file.</p></li>
+<li><p>Shapefile: Styling is typically handled by the GIS software reading the shapefile. The shapefile format itself does not store styling information.</p></li>
+</ul></li>
+<li><p>Software Compatibility:</p>
+<ul>
+<li><p>KML: Widely supported by various mapping and GIS applications, including Google Earth and Google Maps. Many GIS software packages can import and export KML files.</p></li>
+<li><p>Shapefile: A widely supported format in the GIS community. Most GIS software, including ESRI’s ArcGIS, QGIS, and others, can read and write shapefiles.</p></li>
+</ul></li>
+<li><p>Use Cases:</p>
+<ul>
+<li><p>KML: Often used for visualizing and sharing geographic data on online platforms, virtual globes, and web mapping applications. Suitable for applications where human-readable representation is important.</p></li>
+<li><p>Shapefile: Commonly used for more complex GIS workflows, analysis, and data storage. It is a well-established format in the GIS community and is suitable for a wide range of applications.</p></li>
+</ul></li>
+</ol>
+<p>Ultimately, the choice between KML and Shapefile <strong>depends on the specific requirements of a given project and the tools and applications you plan to use</strong>. Each format has its strengths and is better suited to certain use cases.</p>
+</section>
+</section>
+<section id="understanding-sf-packages-and-tidyverse" class="level1">
+<h1>Understanding SF packages and Tidyverse</h1>
+<p><strong>sf Package:</strong></p>
+<ul>
+<li><p>Purpose: The sf package is specifically designed for handling spatial data, focusing on spatial vector data in the form of simple features. It provides a framework for representing and manipulating spatial geometries (points, lines, polygons) along with associated attribute data.</p></li>
+<li><p>Functionality: The primary goal of sf is to work with geographic information, conduct spatial analysis, and create visualizations of spatial data. It supports operations such as spatial joins, overlays, and transformations.</p></li>
+<li><p>Example Use Case: Reading, analyzing, and visualizing shapefiles, GeoJSON files, or other spatial data formats.</p></li>
+</ul>
+<p><strong>Tidyverse Collection:</strong></p>
+<ul>
+<li><p>Purpose: The tidyverse is not a single package but a collection of R packages, including ggplot2, dplyr, tidyr, and others. The tidyverse is centered around the principles of tidy data and a consistent, readable syntax for data manipulation and visualization.</p></li>
+<li><p>Functionality: The tidyverse provides a set of packages that work together seamlessly to facilitate data cleaning, reshaping, analysis, and visualization. It promotes a workflow where data is organized in a tidy format (each variable is a column, each observation is a row).</p></li>
+<li><p>Example Use Case: Cleaning and reshaping tabular data, creating complex and customized plots using ggplot2, and using the %&gt;% pipe operator for chaining operations in a readable manner.</p></li>
+</ul>
+</section>
+<section id="simple-feature-packages" class="level1">
+<h1>Simple Feature Packages</h1>
+<p>Understanding what Sf packages are used for: Importing, managing, and processing geospatial data.</p>
+<section id="p_load" class="level2">
+<h2 class="anchored" data-anchor-id="p_load">p_load</h2>
+<p>The code below, shows how <a href="https://cran.r-project.org/web/packages/pacman/pacman.pdf">p_load</a> helps to install and load sf and tidyverse pacages into R environment.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(sf, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="importing-a-polygon-feature-data-in-shapefile-format." class="level2">
-<h2 class="anchored" data-anchor-id="importing-a-polygon-feature-data-in-shapefile-format.">Importing a polygon feature data in shapefile format.</h2>
-<section id="importing-masterplan-data" class="level3">
-<h3 class="anchored" data-anchor-id="importing-masterplan-data">Importing MasterPlan data</h3>
+<section id="st_read" class="level2">
+<h2 class="anchored" data-anchor-id="st_read">st_read</h2>
+<p>Usage of <a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read</a>: To import geospatial data into R.</p>
+<p>Things to note: for st_read, you dont have to mention the filename extension</p>
+<p>Importing polygon feature data in Shapefile into R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mpsz <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"MP14_SUBZONE_WEB_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mpsz <span class="ot">=</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"../../data/Week1/geospatial"</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">layer =</span> <span class="st">"MP14_SUBZONE_WEB_PL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `MP14_SUBZONE_WEB_PL' from data source 
-  `C:\kllygh\IS415-GAA\Hands-on_Ex\Hands-on_Ex01\data\geospatial' 
-  using driver `ESRI Shapefile'
+  `C:\kllygh\IS415-GAA\data\Week1\geospatial' using driver `ESRI Shapefile'
 Simple feature collection with 323 features and 15 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
@@ -232,17 +445,13 @@ Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
 Projected CRS: SVY21</code></pre>
 </div>
 </div>
-</section>
-<section id="importing-cycling-path-data" class="level3">
-<h3 class="anchored" data-anchor-id="importing-cycling-path-data">Importing Cycling Path data</h3>
+<p>Importing polyline feature data in shapefile form into R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cyclingpath <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial"</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">layer =</span> <span class="st">"CyclingPathGazette"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cyclingpath <span class="ot">=</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"../../data/Week1/geospatial"</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">layer =</span> <span class="st">"CyclingPathGazette"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `CyclingPathGazette' from data source 
-  `C:\kllygh\IS415-GAA\Hands-on_Ex\Hands-on_Ex01\data\geospatial' 
-  using driver `ESRI Shapefile'
+  `C:\kllygh\IS415-GAA\data\Week1\geospatial' using driver `ESRI Shapefile'
 Simple feature collection with 2558 features and 2 fields
 Geometry type: MULTILINESTRING
 Dimension:     XY
@@ -250,14 +459,12 @@ Bounding box:  xmin: 11854.32 ymin: 28347.98 xmax: 42626.09 ymax: 48948.15
 Projected CRS: SVY21</code></pre>
 </div>
 </div>
-</section>
-<section id="importing-gis-data-in-kml-format" class="level3">
-<h3 class="anchored" data-anchor-id="importing-gis-data-in-kml-format">Importing GIS data in kml format</h3>
+<p>Importing GIS data from KML file into R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>preschool <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn=</span><span class="st">"data/geospatial/PreSchoolsLocation.kml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>preschool <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">"../../data/Week1/geospatial/PreSchoolsLocation.kml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `PRESCHOOLS_LOCATION' from data source 
-  `C:\kllygh\IS415-GAA\Hands-on_Ex\Hands-on_Ex01\data\geospatial\PreSchoolsLocation.kml' 
+  `C:\kllygh\IS415-GAA\data\Week1\geospatial\PreSchoolsLocation.kml' 
   using driver `KML'
 Simple feature collection with 2290 features and 2 fields
 Geometry type: POINT
@@ -268,38 +475,30 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 </section>
+<section id="st_geometry" class="level2">
+<h2 class="anchored" data-anchor-id="st_geometry">st_geometry()</h2>
+<p>Usage: This function is often used to retrieve the actual point, line, or polygon coordinates from a spatial dataset.</p>
+<p>In the context of R programming and spatial data analysis, sf_object typically refers to an object created using the sf package, which is specifically designed for handling spatial data in the form of simple features. The sf package provides a framework for representing and manipulating spatial vector data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_geometry</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Geometry set for 323 features 
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33
+Projected CRS: SVY21
+First 5 geometries:</code></pre>
+</div>
+</div>
 </section>
-<section id="plotting-the-geospatial-data" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-the-geospatial-data">Plotting the geospatial data</h2>
+<section id="projection-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="projection-transformation">Projection transformation</h2>
+<p>Usage: Projection transformation, often simply referred to as “projection,” is a process used in cartography (the study and practice of map-making) and Geographic Information Systems (GIS) to convert spatial data from one coordinate reference system to another. This transformation is necessary when data collected or represented in one coordinate system needs to be displayed or analyzed in a different coordinate system.</p>
+<section id="st_crs" class="level3">
+<h3 class="anchored" data-anchor-id="st_crs">st_crs()</h3>
+<p>Usage: This function is used to extract the CRS information from an sf object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(mpsz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mpsz[<span class="st">"PLN_AREA_N"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Correcting the coordinate system</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
   User input: SVY21 
@@ -340,67 +539,74 @@ PROJCRS["SVY21",
             LENGTHUNIT["metre",1,
                 ID["EPSG",9001]]]]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mpsz3414 <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(mpsz, <span class="dv">3414</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(mpsz3414)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="st_set_crs" class="level3">
+<h3 class="anchored" data-anchor-id="st_set_crs">st_set_crs()</h3>
+<p>Usage: To assign the correct EPSG code to mpsz data frame, st_set_crs() of sf package is used as shown in the code chunk below. when you want to update the CRS metadata associated with an sf object without transforming the actual coordinates. This is useful when you know that the object is in a different CRS than the metadata suggests.</p>
+<ul>
+<li>You use st_set_crs() when you want to assign or update the CRS of an sf object. This function does not perform any geometric transformation; it only updates the metadata associated with the object to indicate the new CRS.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mpsz3414 <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(mpsz, <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="st_transform" class="level3">
+<h3 class="anchored" data-anchor-id="st_transform">st_transform()</h3>
+<p>Usage: when you want to transform the spatial coordinates of an sf object from one CRS to another. This is necessary when you have spatial data in one CRS, but you need to work with it in a different CRS.</p>
+<ul>
+<li>You use st_transform() when you want to actually change the coordinates of the geometries to be consistent with a different CRS. This involves a mathematical transformation of the spatial features.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>preschool3414 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(preschool, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">crs =</span> <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="tidyverse-packages" class="level1">
+<h1>Tidyverse Packages</h1>
+<p>Understanding what Tidyverse packages are used for: Performing data science tasks such as importing, wrangling and visualising data.</p>
+<section id="glimpse-dplyr-package" class="level2">
+<h2 class="anchored" data-anchor-id="glimpse-dplyr-package">glimpse() dplyr package</h2>
+<p>Usage: glimpse() is a function provided by the dplyr package, which is part of the tidyverse collection of R packages. The glimpse() function is used for printing a concise summary of a data frame or tibble, including information about the data types of columns and a preview of the first few rows of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Coordinate Reference System:
-  User input: EPSG:3414 
-  wkt:
-PROJCRS["SVY21 / Singapore TM",
-    BASEGEOGCRS["SVY21",
-        DATUM["SVY21",
-            ELLIPSOID["WGS 84",6378137,298.257223563,
-                LENGTHUNIT["metre",1]]],
-        PRIMEM["Greenwich",0,
-            ANGLEUNIT["degree",0.0174532925199433]],
-        ID["EPSG",4757]],
-    CONVERSION["Singapore Transverse Mercator",
-        METHOD["Transverse Mercator",
-            ID["EPSG",9807]],
-        PARAMETER["Latitude of natural origin",1.36666666666667,
-            ANGLEUNIT["degree",0.0174532925199433],
-            ID["EPSG",8801]],
-        PARAMETER["Longitude of natural origin",103.833333333333,
-            ANGLEUNIT["degree",0.0174532925199433],
-            ID["EPSG",8802]],
-        PARAMETER["Scale factor at natural origin",1,
-            SCALEUNIT["unity",1],
-            ID["EPSG",8805]],
-        PARAMETER["False easting",28001.642,
-            LENGTHUNIT["metre",1],
-            ID["EPSG",8806]],
-        PARAMETER["False northing",38744.572,
-            LENGTHUNIT["metre",1],
-            ID["EPSG",8807]]],
-    CS[Cartesian,2],
-        AXIS["northing (N)",north,
-            ORDER[1],
-            LENGTHUNIT["metre",1]],
-        AXIS["easting (E)",east,
-            ORDER[2],
-            LENGTHUNIT["metre",1]],
-    USAGE[
-        SCOPE["Cadastre, engineering survey, topographic mapping."],
-        AREA["Singapore - onshore and offshore."],
-        BBOX[1.13,103.59,1.47,104.07]],
-    ID["EPSG",3414]]</code></pre>
+<pre><code>Rows: 323
+Columns: 16
+$ OBJECTID   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
+$ SUBZONE_NO &lt;int&gt; 1, 1, 3, 8, 3, 7, 9, 2, 13, 7, 12, 6, 1, 5, 1, 1, 3, 2, 2, …
+$ SUBZONE_N  &lt;chr&gt; "MARINA SOUTH", "PEARL'S HILL", "BOAT QUAY", "HENDERSON HIL…
+$ SUBZONE_C  &lt;chr&gt; "MSSZ01", "OTSZ01", "SRSZ03", "BMSZ08", "BMSZ03", "BMSZ07",…
+$ CA_IND     &lt;chr&gt; "Y", "Y", "Y", "N", "N", "N", "N", "Y", "N", "N", "N", "N",…
+$ PLN_AREA_N &lt;chr&gt; "MARINA SOUTH", "OUTRAM", "SINGAPORE RIVER", "BUKIT MERAH",…
+$ PLN_AREA_C &lt;chr&gt; "MS", "OT", "SR", "BM", "BM", "BM", "BM", "SR", "QT", "QT",…
+$ REGION_N   &lt;chr&gt; "CENTRAL REGION", "CENTRAL REGION", "CENTRAL REGION", "CENT…
+$ REGION_C   &lt;chr&gt; "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR", "CR",…
+$ INC_CRC    &lt;chr&gt; "5ED7EB253F99252E", "8C7149B9EB32EEFC", "C35FEFF02B13E0E5",…
+$ FMEL_UPD_D &lt;date&gt; 2014-12-05, 2014-12-05, 2014-12-05, 2014-12-05, 2014-12-05…
+$ X_ADDR     &lt;dbl&gt; 31595.84, 28679.06, 29654.96, 26782.83, 26201.96, 25358.82,…
+$ Y_ADDR     &lt;dbl&gt; 29220.19, 29782.05, 29974.66, 29933.77, 30005.70, 29991.38,…
+$ SHAPE_Leng &lt;dbl&gt; 5267.381, 3506.107, 1740.926, 3313.625, 2825.594, 4428.913,…
+$ SHAPE_Area &lt;dbl&gt; 1630379.27, 559816.25, 160807.50, 595428.89, 387429.44, 103…
+$ geometry   &lt;MULTIPOLYGON [m]&gt; MULTIPOLYGON (((31495.56 30..., MULTIPOLYGON (…</code></pre>
 </div>
 </div>
 </section>
-<section id="transforming-the-projection-of-preschool-from-wgs84-to-svy21." class="level2">
-<h2 class="anchored" data-anchor-id="transforming-the-projection-of-preschool-from-wgs84-to-svy21.">Transforming the projection of preschool from wgs84 to svy21.</h2>
+<section id="read_csv-from-readr-package" class="level2">
+<h2 class="anchored" data-anchor-id="read_csv-from-readr-package">read_csv() from readr package</h2>
+<p>Usage: primary purpose is to read tabular data from CSV (Comma-Separated Values) files. CSV files are a common format for storing tabular data, and they can be used for both spatial and non-spatial datasets.</p>
+<p>Things to note: When providing the path here, include the filename and the file extension.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>preschool3414 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(preschool, </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">crs =</span> <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>listings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../data/Week1/aspatial/listings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="importing-aspatial-data" class="level2">
-<h2 class="anchored" data-anchor-id="importing-aspatial-data">Importing Aspatial data</h2>
+<section id="list-of-base-r" class="level2">
+<h2 class="anchored" data-anchor-id="list-of-base-r">list() of base R</h2>
+<p>Usage: is a base R function used to create a list object. Lists in R can contain elements of different types, such as vectors, data frames, functions, or even other lists. It is a fundamental data structure in R for organizing and storing heterogeneous data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>listings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/aspatial/listings.csv"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(listings) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(listings) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 # A tibble: 3,457 × 18
@@ -422,26 +628,251 @@ PROJCRS["SVY21 / Singapore TM",
 #   reviews_per_month &lt;dbl&gt;, calculated_host_listings_count &lt;dbl&gt;,
 #   availability_365 &lt;dbl&gt;, number_of_reviews_ltm &lt;dbl&gt;, license &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>listings_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(listings, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">crs=</span><span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3414</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When to use <strong>list()</strong> and <strong>glimpse()</strong>?</p>
+<ul>
+<li><p>Use glimpse() when you want to inspect the structure of a data frame or tibble.</p></li>
+<li><p>Use list() when you want to create a list to organize and store different types of elements.</p></li>
+</ul>
+</section>
+<section id="creating-a-simple-feature-data-frame-from-an-aspatial-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-simple-feature-data-frame-from-an-aspatial-data-frame">Creating a simple feature data frame from an aspatial data frame</h2>
+<section id="st_as_sf-sf-package" class="level3">
+<h3 class="anchored" data-anchor-id="st_as_sf-sf-package">st_as_sf() sf package</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>listings_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(listings, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">crs=</span><span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3414</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(listings_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,457
+Columns: 17
+$ id                             &lt;dbl&gt; 71609, 71896, 71903, 275343, 275344, 28…
+$ name                           &lt;chr&gt; "Villa in Singapore · ★4.44 · 2 bedroom…
+$ host_id                        &lt;dbl&gt; 367042, 367042, 367042, 1439258, 143925…
+$ host_name                      &lt;chr&gt; "Belinda", "Belinda", "Belinda", "Kay",…
+$ neighbourhood_group            &lt;chr&gt; "East Region", "East Region", "East Reg…
+$ neighbourhood                  &lt;chr&gt; "Tampines", "Tampines", "Tampines", "Bu…
+$ room_type                      &lt;chr&gt; "Private room", "Private room", "Privat…
+$ price                          &lt;dbl&gt; 150, 80, 80, 64, 78, 220, 85, 75, 69, 7…
+$ minimum_nights                 &lt;dbl&gt; 92, 92, 92, 60, 60, 92, 92, 60, 60, 92,…
+$ number_of_reviews              &lt;dbl&gt; 19, 24, 46, 20, 16, 12, 131, 17, 5, 81,…
+$ last_review                    &lt;date&gt; 2020-01-17, 2019-10-13, 2020-01-09, 20…
+$ reviews_per_month              &lt;dbl&gt; 0.13, 0.16, 0.30, 0.15, 0.11, 0.09, 0.9…
+$ calculated_host_listings_count &lt;dbl&gt; 5, 5, 5, 51, 51, 5, 7, 51, 51, 7, 7, 1,…
+$ availability_365               &lt;dbl&gt; 55, 91, 91, 183, 183, 54, 365, 183, 183…
+$ number_of_reviews_ltm          &lt;dbl&gt; 0, 0, 0, 0, 3, 0, 0, 1, 2, 0, 0, 0, 0, …
+$ license                        &lt;chr&gt; NA, NA, NA, "S0399", "S0399", NA, NA, "…
+$ geometry                       &lt;POINT [m]&gt; POINT (41972.5 36390.05), POINT (…</code></pre>
+</div>
 </div>
 </section>
-<section id="buffering" class="level2">
-<h2 class="anchored" data-anchor-id="buffering">Buffering</h2>
+</section>
+</section>
+<section id="plotting-maps" class="level1">
+<h1>Plotting maps</h1>
+<section id="plotting-geospatial-maps" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-geospatial-maps">Plotting geospatial maps</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>buffer_cycling <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(cyclingpath, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">dist=</span><span class="dv">5</span>, <span class="at">nQuadSegs =</span> <span class="dv">30</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>buffer_cycling<span class="sc">$</span>AREA <span class="ot">&lt;-</span> <span class="fu">st_area</span>(buffer_cycling)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(buffer_cycling<span class="sc">$</span>AREA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mpsz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(mpsz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mpsz[<span class="st">"PLN_AREA_N"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="geoprocessing-with-sf-package" class="level1">
+<h1>Geoprocessing with sf package</h1>
+<section id="buffer" class="level2">
+<h2 class="anchored" data-anchor-id="buffer">Buffer</h2>
+<p>Definition: A buffer in GIS is a defined zone or area created around or within a geographic feature such as a point, line, or polygon.</p>
+<p>Why do we use buffer?</p>
+<ul>
+<li><p>Buffers help answer questions like “What are the features within a certain distance from a given point?”</p></li>
+<li><p>“How many road segments intersect a specific buffer zone?”</p></li>
+<li><p>Buffering can also be used to identify if a geographic feature is found within proximity to another geographic feature</p></li>
+<li><p>a business may use buffering along with census data to see the demographics of customers that live within a certain distance of their store.</p></li>
+</ul>
+<section id="st_buffer" class="level3">
+<h3 class="anchored" data-anchor-id="st_buffer">st_buffer()</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>buffer_cycling <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(cyclingpath, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">dist=</span><span class="dv">5</span>, <span class="at">nQuadSegs =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="st_area" class="level3">
+<h3 class="anchored" data-anchor-id="st_area">st_area()</h3>
+<p>Explanation of the code below: This code is using the sf (Simple Features) package in R to calculate and add a new column named AREA to a spatial object named buffer_cycling. The AREA column will store the calculated areas of each geometry in the buffer_cycling object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>buffer_cycling<span class="sc">$</span>AREA <span class="ot">&lt;-</span> <span class="fu">st_area</span>(buffer_cycling)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sum" class="level3">
+<h3 class="anchored" data-anchor-id="sum">sum()</h3>
+<p>To calculate the total land involved</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(buffer_cycling<span class="sc">$</span>AREA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1774367 [m^2]</code></pre>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="point-in-polygon-count" class="level2">
+<h2 class="anchored" data-anchor-id="point-in-polygon-count">Point-in-polygon count</h2>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
+<section id="length-and-st_intersects" class="level4">
+<h4 class="anchored" data-anchor-id="length-and-st_intersects">length() and st_intersects()</h4>
+<p>st_intersects(x, y, sparse = FALSE, …) <strong>&amp;&amp;</strong> intersects_result &lt;- st_intersects(points, polygon)</p>
+<ul>
+<li><p>x and y: The sf objects for which intersection is being tested. These can be simple features (points, lines, polygons, etc.) or geometries.</p></li>
+<li><p>sparse: A logical parameter indicating whether to use a sparse matrix representation for the result. If sparse is set to TRUE, the result will be a sparse matrix.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span><span class="ot">&lt;-</span> <span class="fu">lengths</span>(<span class="fu">st_intersects</span>(mpsz3414, preschool3414))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summary" class="level4">
+<h4 class="anchored" data-anchor-id="summary">Summary()</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    4.00    7.09   10.00   72.00 </code></pre>
+</div>
+</div>
+</section>
+<section id="top_n" class="level4">
+<h4 class="anchored" data-anchor-id="top_n">top_n()</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">top_n</span>(mpsz3414, <span class="dv">1</span>, <span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 1 feature and 16 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 39655.33 ymin: 35966 xmax: 42940.57 ymax: 38622.37
+Projected CRS: SVY21 / Singapore TM
+  OBJECTID SUBZONE_NO     SUBZONE_N SUBZONE_C CA_IND PLN_AREA_N PLN_AREA_C
+1      189          2 TAMPINES EAST    TMSZ02      N   TAMPINES         TM
+     REGION_N REGION_C          INC_CRC FMEL_UPD_D   X_ADDR   Y_ADDR SHAPE_Leng
+1 EAST REGION       ER 21658EAAF84F4D8D 2014-12-05 41122.55 37392.39   10180.62
+  SHAPE_Area                       geometry PreSch Count
+1    4339824 MULTIPOLYGON (((42196.76 38...           72</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="example-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
+<section id="st_area-and-mutate" class="level4">
+<h4 class="anchored" data-anchor-id="st_area-and-mutate">st_area() and mutate()</h4>
+<p>Things to note:</p>
+<ul>
+<li><strong><code>mpsz3414 %&gt;% st_area()</code></strong> is equivalent to <strong><code>st_area(mpsz3414)</code></strong>.</li>
+</ul>
+<p>Explanation of the code:</p>
+<ul>
+<li><p>mutate(): This function is from the dplyr package and is used for creating or modifying columns in a data frame. It allows you to add new columns or modify existing ones based on specified calculations.</p></li>
+<li><p><code>mpsz3414 %&gt;% ...</code>: The pipe operator <code>(%&gt;%)</code> is used to pass the <code>mpsz3414</code> data frame to the subsequent mutate() function. This creates a readable and sequential flow of operations.</p></li>
+<li><p>df &lt;- df %&gt;% mutate(Doubled = Value * 2)</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mpsz3414<span class="sc">$</span>Area <span class="ot">&lt;-</span> mpsz3414 <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_area</span>()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>mpsz3414 <span class="ot">&lt;-</span> mpsz3414 <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span><span class="sc">/</span>Area <span class="sc">*</span> <span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="exploratory-data-analysis" class="level1">
+<h1>Exploratory Data Analysis</h1>
+<p>Explanation of the code:</p>
+<ul>
+<li>This part of the code is specifying the column of interest. mpsz3414$PreSch Density`<code>refers to the "PreSch Density" column in the mpsz3414 data frame. The backticks (</code>) are used to denote column names that include spaces or special characters.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming 'mpsz3414' is a data frame with a column 'PreSch Density'</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpsz3414<span class="sc">$</span><span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span>, <span class="at">main =</span> <span class="st">"PreSch Density Histogram"</span>, <span class="at">xlab =</span> <span class="st">"Density"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">col =</span> <span class="st">"skyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Further customisation of the codes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mpsz3414, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> <span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span>)))<span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>, </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color=</span><span class="st">"black"</span>, </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill=</span><span class="st">"light blue"</span>) <span class="sc">+</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Are pre-school even distributed in Singapore?"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span> <span class="st">"There are many planning sub-zones with a single pre-school, on the other hand, </span><span class="sc">\n</span><span class="st">there are two planning sub-zones with at least 20 pre-schools"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Pre-school density (per km sq)"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mpsz3414, </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> <span class="st">`</span><span class="at">PreSch Count</span><span class="st">`</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span> <span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">PreSch Density</span><span class="st">`</span>)))<span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"black"</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill=</span><span class="st">"light blue"</span>) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="sc">+</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">""</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Pre-school density (per km sq)"</span>,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Pre-school count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Hands-on_EX1_files/figure-html/unnamed-chunk-22-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

@@ -9,6 +9,14 @@ website:
         menu:
           - text: "Hands-on Exercise 1"
             href: "Hands-on_Ex/Hands-on_Ex01/Hands-on_EX1.html"
+      - text: "In-class Exercise"
+        menu:
+          - text: "In-class Exercise 1"
+            href: "In-class_Ex/In-class_Ex01/In-class_Ex01.html"
+      - text: "Personal Notes"
+        menu: 
+          - text: "Personal Notes Week 1"
+            href: "Personal_notes/Personal_notes_Week1/Personal_notes_week1.html"
     right:
       - href: index.qmd
         text: Home

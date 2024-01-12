@@ -5,87 +5,429 @@ execute:
 date: "`r Sys.Date()`"
 ---
 
-# Getting Started
+# Agenda
 
-## Installing and Loading R packages
+-   Data acquistion
+-   Understanding the different files
+-   Simple Feature Packages
+-   Tidyverse Packages
+-   Plotting maps
 
-In this section, I will install and load tidyverse and sf packages.
+# Data Acquisition
+
+Collecting information from these website below:
+
+-   data.gov.sg
+
+-   https://datamall.lta.gov.sg/content/datamall/en.html
+
+-   http://insideairbnb.com/get-the-data/
+
+Understanding the difference between geospatial and aspatial data:
+
+1.  Geospatial Data:
+
+    -   Definition: Geospatial data, also known as spatial data, refers to information that has a geographic or spatial component. It involves the representation of objects, features, or phenomena that exist in or on the Earth's surface and can be located relative to a coordinate system.
+
+    -   Examples: Maps, GPS coordinates, satellite imagery, shapefiles, and any data associated with a specific location on the Earth.
+
+2.  Aspatial Data:
+
+    -   Definition: Aspatial data, also known as non-spatial data, lacks a specific geographic or spatial component. It includes information that is not inherently tied to a particular location on the Earth's surface.
+
+    -   Examples: Tabular data, spreadsheets, demographic information, temperature readings, and any data that doesn't inherently involve spatial coordinates.
+
+To summarise, the difference lies in whether or not the data is tied to geographical location.
+
+# Understanding the different files
+
+Below are the different files:
+
+1.  ESRI shapefile format
+
+2.  kml file
+
+## ESRI Shapefile Format
+
+The ESRI Shapefile format is a popular geospatial vector data format developed by ESRI (Environmental Systems Research Institute), a company that provides Geographic Information System (GIS) software and solutions. The shapefile format is widely used for storing and exchanging geospatial data, and it has become a de facto standard in the GIS community.
+
+Understanding components of ESRI Shapefile:
+
+1.  Geometry Types:
+    -   A shapefile can store different types of vector geometries, including points, lines (or polylines), and polygons. Each geometry type is associated with a set of coordinates that define the shape's location and structure.
+2.  Attribute Data:
+    -   In addition to the spatial information, shapefiles can contain attribute data associated with each spatial feature. This attribute data is typically stored in a separate database file (.dbf) and can include information such as names, IDs, or any other descriptive attributes for the features.
+3.  Multiple Files:
+    -   A complete shapefile dataset consists of several files with different extensions. The main files include: **.shp**: Contains the geometry information. **.shx**: Contains the shape index data. **.dbf**: Stores attribute data in a tabular format. **.prj**: Specifies the coordinate system and projection information. Other auxiliary files (.**sbn, .sbx, .shp.xml,** etc.) may also be present.
+4.  Projection Information:
+    -   The shapefile format allows for the inclusion of projection information in the .prj file, **specifying the coordinate system and projection used for the spatial data**. This ensures that spatial features are correctly located on the Earth's surface.
+5.  Compatibility:
+    -   Shapefiles are widely supported by various GIS software packages, making them easy to share and exchange among different systems. Many GIS applications, including ESRI's ArcGIS, QGIS, and others, can read and write shapefiles.
+
+To work with shapefiles in R, you can use the sf package, as mentioned in a previous response. The sf package provides functions for reading, writing, and manipulating spatial data in the form of simple features, and it is compatible with the ESRI shapefile format.
+
+## kml File
+
+A KML (Keyhole Markup Language) file is a type of XML (eXtensible Markup Language) file format used to express geographic annotation and visualization within three-dimensional Earth browsers. KML files are commonly associated with mapping applications, GIS (Geographic Information System) software, and online mapping services. The format was developed by Keyhole Inc., which was later acquired by Google.
+
+Key features of KML files include:
+
+1.  Geospatial Information:
+
+    -   KML files are used to represent geospatial data, including points, lines, polygons, and images, on the Earth's surface. They can contain information such as coordinates, placemarks, paths, and 3D models.
+
+2.  XML Structure:
+
+    -   KML files are XML documents, meaning they use a **hierarchical structure of tags** to organize and describe geographic information. The XML format makes it human-readable and easy to parse by machines.
+
+3.  Placemarks and Features:
+
+    -   KML files often include placemarks, which mark specific points on the Earth's surface and may include additional information such as names, descriptions, and styles. Other features like paths and polygons are also commonly used to represent linear features or enclosed areas.
+
+4.  Styling and Visualization:
+
+    -   KML supports the **styling of features**, allowing users to define the appearance of points, lines, and polygons. This includes specifying colors, icons, labels, and other visual attributes.
+
+5.  Compatibility:
+
+    -   KML is widely supported by various mapping and GIS applications, including Google Earth, Google Maps, and many other GIS software packages. This makes it a common choice for sharing geographic data.
+
+6.  Extension Support:
+
+    -   KML supports extensions, allowing users to include additional custom data and attributes beyond the core KML specification. This flexibility makes it suitable for various applications and use cases. To view or interact with KML files, you can use tools like Google Earth, which provides a user-friendly interface for exploring geospatial data in a 3D environment. Many GIS software packages also support the import and export of KML files, allowing for integration into broader geospatial workflows.
+
+In R, you can use packages like sf or plotKML to work with KML files and integrate them into your geospatial analyses and visualizations.
+
+## Understanding the difference between ESRI Shapefile and KML
+
+KML (Keyhole Markup Language) and Shapefile are both file formats used for storing and exchanging geospatial data, but they have some key differences in terms of structure, capabilities, and use cases.
+
+Here's a comparison between KML and Shapefile:
+
+1.  File Format and Structure:
+
+    -   KML: KML is an XML-based file format. It uses tags and attributes to represent geographic features, attributes, and styling information. KML files are human-readable and can be easily edited with a text editor. They are well-suited for representing geographic data in a **hierarchical and descriptive manner.**
+
+    -   Shapefile: A Shapefile is a set of files with different extensions (.shp, .shx, .dbf, .prj, etc.) that collectively store both **spatial and attribute data.** The .shp file contains geometric data, while the .dbf file stores attribute data in a tabular format. The shapefile format is more structured and relies on binary files for geometry.
+
+2.  Geometry Types:
+
+    -   KML: Supports points, lines, polygons, 3D models, and other geometries. It is versatile and can represent both **2D and 3D spatial features**.
+
+    -   Shapefile: Supports points, lines, and polygons, but **does not inherently support 3D geometries**. It's primarily used for 2D vector data.
+
+3.  Attributes and Database:
+
+    -   KML: Attributes are included within the KML file itself, typically in a <Data> element or as attributes of specific features. The structure is **less rigid, and attributes can be added flexibly**.
+
+    -   Shapefile: Attribute data is stored in a separate .dbf file. The tabular structure allows for a more organized representation of attribute information.
+
+4.  Styling and Visualization:
+
+    -   KML: Provides rich styling options, allowing users to define colors, icons, labels, and other visual attributes for individual features. Styling information is often embedded within the KML file.
+
+    -   Shapefile: Styling is typically handled by the GIS software reading the shapefile. The shapefile format itself does not store styling information.
+
+5.  Software Compatibility:
+
+    -   KML: Widely supported by various mapping and GIS applications, including Google Earth and Google Maps. Many GIS software packages can import and export KML files.
+
+    -   Shapefile: A widely supported format in the GIS community. Most GIS software, including ESRI's ArcGIS, QGIS, and others, can read and write shapefiles.
+
+6.  Use Cases:
+
+    -   KML: Often used for visualizing and sharing geographic data on online platforms, virtual globes, and web mapping applications. Suitable for applications where human-readable representation is important.
+
+    -   Shapefile: Commonly used for more complex GIS workflows, analysis, and data storage. It is a well-established format in the GIS community and is suitable for a wide range of applications.
+
+Ultimately, the choice between KML and Shapefile **depends on the specific requirements of a given project and the tools and applications you plan to use**. Each format has its strengths and is better suited to certain use cases.
+
+# Understanding SF packages and Tidyverse
+
+**sf Package:**
+
+-   Purpose: The sf package is specifically designed for handling spatial data, focusing on spatial vector data in the form of simple features. It provides a framework for representing and manipulating spatial geometries (points, lines, polygons) along with associated attribute data.
+
+-   Functionality: The primary goal of sf is to work with geographic information, conduct spatial analysis, and create visualizations of spatial data. It supports operations such as spatial joins, overlays, and transformations.
+
+-   Example Use Case: Reading, analyzing, and visualizing shapefiles, GeoJSON files, or other spatial data formats.
+
+**Tidyverse Collection:**
+
+-   Purpose: The tidyverse is not a single package but a collection of R packages, including ggplot2, dplyr, tidyr, and others. The tidyverse is centered around the principles of tidy data and a consistent, readable syntax for data manipulation and visualization.
+
+-   Functionality: The tidyverse provides a set of packages that work together seamlessly to facilitate data cleaning, reshaping, analysis, and visualization. It promotes a workflow where data is organized in a tidy format (each variable is a column, each observation is a row).
+
+-   Example Use Case: Cleaning and reshaping tabular data, creating complex and customized plots using ggplot2, and using the %\>% pipe operator for chaining operations in a readable manner.
+
+# Simple Feature Packages
+
+Understanding what Sf packages are used for: Importing, managing, and processing geospatial data.
+
+## p_load
+
+The code below, shows how [p_load](https://cran.r-project.org/web/packages/pacman/pacman.pdf) helps to install and load sf and tidyverse pacages into R environment.
 
 ```{r}
-pacman::p_load(tidyverse, sf)
+pacman::p_load(sf, tidyverse)
 ```
 
-## Importing a polygon feature data in shapefile format.
+## st_read
 
-### Importing MasterPlan data
+Usage of [st_read](https://r-spatial.github.io/sf/reference/st_read.html): To import geospatial data into R.
 
-```{r}
-mpsz <- st_read(dsn = "data/geospatial",
-                layer = "MP14_SUBZONE_WEB_PL")
-```
+Things to note: for st_read, you dont have to mention the filename extension
 
-### Importing Cycling Path data
+Importing polygon feature data in Shapefile into R:
 
 ```{r}
-cyclingpath <- st_read(dsn = "data/geospatial",
-                layer = "CyclingPathGazette"
-)
-```
-
-### Importing GIS data in kml format
-
-```{r}
-preschool <- st_read(dsn="data/geospatial/PreSchoolsLocation.kml")
-```
-
-
-## Plotting the geospatial data
-
-```{r}
-plot(mpsz)
-
-plot(st_geometry(mpsz))
-
-plot(mpsz["PLN_AREA_N"])
+mpsz = st_read(dsn = "../../data/Week1/geospatial", 
+                  layer = "MP14_SUBZONE_WEB_PL")
 
 ```
 
-Correcting the coordinate system
-```{r}
+Importing polyline feature data in shapefile form into R:
 
+```{r}
+cyclingpath = st_read(dsn = "../../data/Week1/geospatial", 
+                         layer = "CyclingPathGazette")
+```
+
+Importing GIS data from KML file into R:
+
+```{r}
+preschool = st_read("../../data/Week1/geospatial/PreSchoolsLocation.kml")
+```
+
+## st_geometry()
+
+Usage: This function is often used to retrieve the actual point, line, or polygon coordinates from a spatial dataset.
+
+In the context of R programming and spatial data analysis, sf_object typically refers to an object created using the sf package, which is specifically designed for handling spatial data in the form of simple features. The sf package provides a framework for representing and manipulating spatial vector data.
+
+```{r}
+st_geometry(mpsz)
+```
+
+## Projection transformation
+
+Usage: Projection transformation, often simply referred to as "projection," is a process used in cartography (the study and practice of map-making) and Geographic Information Systems (GIS) to convert spatial data from one coordinate reference system to another. This transformation is necessary when data collected or represented in one coordinate system needs to be displayed or analyzed in a different coordinate system.
+
+### st_crs()
+
+Usage: This function is used to extract the CRS information from an sf object.
+
+```{r}
 st_crs(mpsz)
-
-mpsz3414 <- st_set_crs(mpsz, 3414)
-
-st_crs(mpsz3414)
-
 ```
-## Transforming the projection of preschool from wgs84 to svy21.
+
+### st_set_crs()
+
+Usage: To assign the correct EPSG code to mpsz data frame, st_set_crs() of sf package is used as shown in the code chunk below. when you want to update the CRS metadata associated with an sf object without transforming the actual coordinates. This is useful when you know that the object is in a different CRS than the metadata suggests.
+
+-   You use st_set_crs() when you want to assign or update the CRS of an sf object. This function does not perform any geometric transformation; it only updates the metadata associated with the object to indicate the new CRS.
+
+```{r}
+mpsz3414 <- st_set_crs(mpsz, 3414)
+```
+
+### st_transform()
+
+Usage: when you want to transform the spatial coordinates of an sf object from one CRS to another. This is necessary when you have spatial data in one CRS, but you need to work with it in a different CRS.
+
+-   You use st_transform() when you want to actually change the coordinates of the geometries to be consistent with a different CRS. This involves a mathematical transformation of the spatial features.
 
 ```{r}
 preschool3414 <- st_transform(preschool, 
                               crs = 3414)
 ```
 
-## Importing Aspatial data
+# Tidyverse Packages
+
+Understanding what Tidyverse packages are used for: Performing data science tasks such as importing, wrangling and visualising data.
+
+## glimpse() dplyr package
+
+Usage: glimpse() is a function provided by the dplyr package, which is part of the tidyverse collection of R packages. The glimpse() function is used for printing a concise summary of a data frame or tibble, including information about the data types of columns and a preview of the first few rows of the data.
 
 ```{r}
-listings <- read_csv("data/aspatial/listings.csv")
+glimpse(mpsz)
+```
 
+## read_csv() from readr package
+
+Usage: primary purpose is to read tabular data from CSV (Comma-Separated Values) files. CSV files are a common format for storing tabular data, and they can be used for both spatial and non-spatial datasets.
+
+Things to note: When providing the path here, include the filename and the file extension.
+
+```{r}
+listings <- read_csv("../../data/Week1/aspatial/listings.csv")
+```
+
+## list() of base R
+
+Usage: is a base R function used to create a list object. Lists in R can contain elements of different types, such as vectors, data frames, functions, or even other lists. It is a fundamental data structure in R for organizing and storing heterogeneous data.
+
+```{r}
 list(listings) 
+```
 
+When to use **list()** and **glimpse()**?
+
+-   Use glimpse() when you want to inspect the structure of a data frame or tibble.
+
+-   Use list() when you want to create a list to organize and store different types of elements.
+
+## Creating a simple feature data frame from an aspatial data frame
+
+### st_as_sf() sf package
+
+```{r}
 listings_sf <- st_as_sf(listings, 
                        coords = c("longitude", "latitude"),
                        crs=4326) %>%
   st_transform(crs = 3414)
+
+glimpse(listings_sf)
 ```
 
-## Buffering
+# Plotting maps
+
+## Plotting geospatial maps
 
 ```{r}
+plot(mpsz)
+plot(st_geometry(mpsz))
+plot(mpsz["PLN_AREA_N"])
+```
 
+# Geoprocessing with sf package
+
+## Buffer
+
+Definition: A buffer in GIS is a defined zone or area created around or within a geographic feature such as a point, line, or polygon.
+
+Why do we use buffer?
+
+-   Buffers help answer questions like “What are the features within a certain distance from a given point?”
+
+-   “How many road segments intersect a specific buffer zone?”
+
+-   Buffering can also be used to identify if a geographic feature is found within proximity to another geographic feature
+
+-   a business may use buffering along with census data to see the demographics of customers that live within a certain distance of their store.
+
+### st_buffer()
+
+```{r}
 buffer_cycling <- st_buffer(cyclingpath, 
                                dist=5, nQuadSegs = 30)
+```
+
+### st_area()
+
+Explanation of the code below: This code is using the sf (Simple Features) package in R to calculate and add a new column named AREA to a spatial object named buffer_cycling. The AREA column will store the calculated areas of each geometry in the buffer_cycling object.
+
+```{r}
 buffer_cycling$AREA <- st_area(buffer_cycling)
+```
+
+### sum()
+
+To calculate the total land involved
+
+```{r}
 sum(buffer_cycling$AREA)
+```
+
+## Point-in-polygon count
+
+### Example 1
+
+#### length() and st_intersects()
+
+st_intersects(x, y, sparse = FALSE, ...) **&&** intersects_result \<- st_intersects(points, polygon)
+
+-   x and y: The sf objects for which intersection is being tested. These can be simple features (points, lines, polygons, etc.) or geometries.
+
+-   sparse: A logical parameter indicating whether to use a sparse matrix representation for the result. If sparse is set to TRUE, the result will be a sparse matrix.
+
+```{r}
+mpsz3414$`PreSch Count`<- lengths(st_intersects(mpsz3414, preschool3414))
+```
+
+#### Summary()
+
+```{r}
+summary(mpsz3414$`PreSch Count`)
+```
+
+#### top_n()
+
+```{r}
+top_n(mpsz3414, 1, `PreSch Count`)
+```
+
+### Example 2
+
+#### st_area() and mutate()
+
+Things to note:
+
+-   **`mpsz3414 %>% st_area()`** is equivalent to **`st_area(mpsz3414)`**.
+
+Explanation of the code:
+
+-   mutate(): This function is from the dplyr package and is used for creating or modifying columns in a data frame. It allows you to add new columns or modify existing ones based on specified calculations.
+
+-   `mpsz3414 %>% ...`: The pipe operator `(%>%)` is used to pass the `mpsz3414` data frame to the subsequent mutate() function. This creates a readable and sequential flow of operations.
+
+-   df \<- df %\>% mutate(Doubled = Value \* 2)
+
+```{r}
+mpsz3414$Area <- mpsz3414 %>%
+  st_area()
+
+mpsz3414 <- mpsz3414 %>%
+  mutate(`PreSch Density` = `PreSch Count`/Area * 1000000)
+```
+
+# Exploratory Data Analysis
+
+Explanation of the code:
+
+-   This part of the code is specifying the column of interest. mpsz3414$PreSch Density`` refers to the "PreSch Density" column in the mpsz3414 data frame. The backticks (`) are used to denote column names that include spaces or special characters.
+
+
+```{r}
+hist(mpsz3414$`PreSch Density`)
+
+# Assuming 'mpsz3414' is a data frame with a column 'PreSch Density'
+hist(mpsz3414$`PreSch Density`, main = "PreSch Density Histogram", xlab = "Density", ylab = "Frequency", col = "skyblue")
+
+```
+
+Further customisation of the codes:
+
+```{r}
+ggplot(data=mpsz3414, 
+       aes(x= as.numeric(`PreSch Density`)))+
+  geom_histogram(bins=20, 
+                 color="black", 
+                 fill="light blue") +
+  labs(title = "Are pre-school even distributed in Singapore?",
+       subtitle= "There are many planning sub-zones with a single pre-school, on the other hand, \nthere are two planning sub-zones with at least 20 pre-schools",
+      x = "Pre-school density (per km sq)",
+      y = "Frequency")
+
+ggplot(data=mpsz3414, 
+       aes(y = `PreSch Count`, 
+           x= as.numeric(`PreSch Density`)))+
+  geom_point(color="black", 
+             fill="light blue") +
+  xlim(0, 40) +
+  ylim(0, 40) +
+  labs(title = "",
+      x = "Pre-school density (per km sq)",
+      y = "Pre-school count")
 ```
