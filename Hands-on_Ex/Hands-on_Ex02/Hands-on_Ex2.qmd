@@ -1,0 +1,464 @@
+---
+title: "Hands-on Exercise 2"
+execute: 
+  warning: false
+date: "`r Sys.Date()`"
+---
+
+# Content & Theory
+
+[Understanding the difference between classified and unclassified chloropleth maps:]{.underline}
+
+-   Classified Choropleth Map:
+    -   Use Case: Classified choropleth maps are more common and appropriate when you **want to highlight patterns, trends, or variations** in the data across different classes or ranges.
+    -   Data Characteristics: If your data naturally falls into **distinct categories or classes**, such as income brackets, population density ranges, or temperature zones, a classified choropleth map is suitable.
+    -   Communication of Patterns: This type of map is effective in communicating the relative differences and relationships between geographic regions within each class.
+    -   Example: Showing different income levels across regions, where each class represents a specific income range, and different colors represent different classes.
+-   Unclassified Choropleth Map:
+    -   Use Case: Unclassified choropleth maps are used when the **emphasis is on the overall distribution of the data rather than specific classes**. It is also known as a continuous or graduated choropleth map.
+    -   Data Characteristics: If your **data is more continuous and doesn't naturally fall into distinct classes,** such as temperature gradients or precipitation levels, an unclassified choropleth map is more appropriate.
+    -   Communication of Gradations: This type of map is suitable when you want to communicate the gradual change or intensity of a variable across regions without categorizing them into specific classes.
+    -   Example: Showing a gradient of population density across regions without predefined categories; the map could represent a smooth transition from low to high density.
+
+[Understanding how data distribution affects choosing classes for a choropleth map:]{.underline}
+
+The of the distribution influences the effectiveness of each classification method. Understanding whether your data is skewed, evenly distributed, has natural breaks, or follows a particular pattern helps you choose the most **appropriate classification method for creating a choropleth map that accurately represents the underlying spatial patterns in your data.** Choosing the right classification method enhances the map's interpretability and ensures that the representation aligns with the characteristics of the data you are visualizing.
+
+-   Quantiles:
+    -   Importance of Distribution: Quantiles divide the data into equal-sized groups, which is especially useful when dealing with data that may have skewed distributions or outliers. **Quantiles are less sensitive to extreme values**.
+    -   Use Case: Effective for data with varying levels of intensity, where you want to ensure that **each category represents an equal proportion of the total observations**.
+-   Equal Interval:
+    -   Importance of Distribution: Equal interval classification divides the range of values into equal intervals. This method is suitable when the data exhibits a **fairly uniform distribution**.
+    -   Use Case: Works well for data with a linear distribution, where equal intervals provide a simple and **easy-to-understand representation**.
+-   Natural Breaks (Jenks):
+    -   Importance of Distribution: Natural breaks aim to **identify natural groupings or clusters in the data**. It is useful when the data has distinct breaks or modes.
+    -   Use Case: Effective for data with clear breaks or patterns, helping to emphasize differences between groups.
+-   Standard Deviation:
+    -   Importance of Distribution: Standard deviation **classification is suitable for data with a normal distribution**. It places values into classes based on the standard deviation from the mean.
+    -   Use Case: Appropriate for normally distributed data, where you want to **highlight variations from the average**.
+-   Defined Interval:
+    -   Importance of Distribution: Defined interval classification allows you to specify custom class intervals. It is flexible and can be adapted to the specific characteristics of your data.
+    -   Use Case: Useful when you have prior knowledge or specific criteria for defining meaningful intervals in your data.
+
+[An overview of all the mapping packages in R]{.underline}
+
+1.  tmap**:**
+
+    -   **Purpose:** **`tmap`** is a package for creating thematic maps in R. It provides a framework for easily creating static and interactive maps with a focus on simplicity and flexibility. It allows users to create map visualizations with various map types, legends, and thematic mapping techniques.
+
+2.  mapsf:
+
+    -   **Purpose:** **`mapsf`** is another R package for creating thematic maps. It builds on the simplicity of the **`sf`** package for handling spatial data and aims to provide an easy-to-use interface for producing high-quality maps.
+
+3.  leaflet:
+
+    -   **Purpose:** **`leaflet`** is an R package that interfaces with the JavaScript library Leaflet for creating interactive maps. It is particularly useful for web-based mapping applications and provides a simple way to add interactive features like zooming, panning, and pop-ups.
+
+4.  ggplot2:
+
+    -   **Purpose:** **`ggplot2`** is a powerful and versatile package for creating static graphics in R. While not specifically designed for maps, it can be used for creating static choropleth maps and other types of visualizations. When combined with spatial data, it allows for sophisticated data visualization.
+
+5.  ggmap:
+
+    -   **Purpose:** **`ggmap`** is an extension of **`ggplot2`** that facilitates the integration of static maps from Google Maps, OpenStreetMap, or other mapping providers into your **`ggplot2`** visualizations. It is useful for creating data visualizations that incorporate a background map.
+
+6.  quickmapr:
+
+    -   **Purpose:** **`quickmapr`** is a package designed for the quick and easy visualization of spatial data, including shapefiles and raster data. It provides functions to load, plot, and analyze spatial data in a straightforward manner.
+
+7.  mapview:
+
+    -   **Purpose:** **`mapview`** is an R package that provides an interactive viewing environment for spatial data. It allows users to explore spatial datasets with an interactive map viewer, making it easier to inspect and analyze the data.
+
+8.  RColorBrewer:
+
+    -   **Purpose:** **`RColorBrewer`** is not a mapping package per se, but it is a package that provides color palettes suitable for thematic mapping. It is often used in conjunction with other mapping packages to enhance the visual appeal and interpretability of maps.
+
+9.  classInt:
+
+    -   **Purpose:** **`classInt`** is a package that provides functions for choosing class intervals for choropleth maps. It offers different methods for classifying numerical data into meaningful intervals, such as quantiles, equal intervals, and more.
+
+These packages cover a range of functionalities, from creating static and interactive maps to handling spatial data, adding background maps, and choosing appropriate color schemes for thematic mapping. The choice of a specific package often depends on the specific requirements of your mapping task and the features you need in your visualization.
+
+# Main functions we will be using
+
+-   [tmap](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html)
+-   readr
+-   tidyr
+-   dplyr
+-   sf
+
+```{r}
+pacman::p_load(sf,tidyverse,tmap)
+```
+
+## Importing the data
+
+Geospatial data: Shapefile or KML file
+
+```{r}
+mpz <- st_read(dsn = "../../data/Week2/geospatial",
+               layer = "MP14_SUBZONE_WEB_PL")
+
+mpz
+head(mpz,n=5)
+tail(mpz,n=5)
+```
+
+Aspatial data: read_csv()
+
+```{r}
+popdata <- read_csv("../../data/Week2/aspatial/respopagesextod2011to2020.csv")
+popdata
+```
+
+## Data Wrangling functions used
+
+Definition of data wrangling: Data wrangling, also known as data munging or data preprocessing, refers to the process of cleaning, structuring, and transforming raw data into a format that is suitable for analysis or other downstream tasks.
+
+### Some functions that we will be using this week & a quick dive into them:
+
+1.  pivot_wider()
+
+    -   `pivot_wider()` is used to reshape data from long to wide format.
+
+    ![](images/clipboard-363086891.png){width="226"}
+
+2.  mutate()
+
+    -   `mutate()` This function is used to add new variables or modify existing ones in a data frame
+
+    ![](images/clipboard-1165931891.png){width="299"}
+
+3.  filter()
+
+    -   `filter()` This function is used to subset data based on conditions.
+
+    ![](images/clipboard-3764299222.png){width="343"}
+
+4.  group_by()
+
+    -   `group_by()` This function is used to group data by one or more variables. It is often used in combination with functions like summarize().
+
+    ![](images/clipboard-2310877720.png){width="390"}
+
+5.  select()
+
+    -   `select()` This function is used to select specific columns from a data frame.
+
+    ![](images/clipboard-1448347802.png){width="350"}
+
+### Putting all the function together, an example of data wrangling:
+
+Explanation of the code:
+
+-   Filtering Data for the Year 2020: `filter(Time == 2020)`: This line filters the dataset popdata to include only rows where the column Time has a value of 2020.
+
+-   Grouping and Summarizing Data: `group_by(PA, SZ, AG) %>% summarise(POP = sum(Pop)):` It groups the filtered data by the columns PA, SZ, and AG, and then calculates the sum of the Pop column for each group, creating a new column named POP with the summarized population.
+
+-   Ungrouping Data: `ungroup():` This ungroups the data, removing the grouping structure. It is often used after summarizing grouped data.
+
+-   Pivoting Data from Long to Wide Format: `pivot_wider(names_from=AG, values_from=POP):` It pivots the data from long to wide format, creating separate columns for each unique value in the AG column (assuming AG represents different age groups).
+
+-   Calculating Additional Variables:
+
+    -   `mutate(YOUNG = rowSums(.[3:6]) + rowSums(.[12])):` It calculates a new variable YOUNG by summing the values in columns 3 to 6 and column 12.
+
+    -   `mutate(ECONOMY ACTIVE = rowSums(.[7:11]) + rowSums(.[13:15])):` It calculates a new variable ECONOMY ACTIVE by summing the values in columns 7 to 11 and columns 13 to 15.
+
+    -   `mutate(AGED=rowSums(.[16:21]))`: It calculates a new variable AGED by summing the values in columns 16 to 21.
+
+    -   `mutate(TOTAL=rowSums(.[3:21])):` It calculates a new variable TOTAL by summing the values in columns 3 to 21.
+
+    -   `mutate(DEPENDENCY = (YOUNG+AGED) / ECONOMY ACTIVE):` It calculates a new variable DEPENDENCY by dividing the sum of YOUNG and AGED by ECONOMY ACTIVE.
+
+-   Selecting Specific Columns:
+
+    -   `select(PA, SZ, YOUNG, ECONOMY ACTIVE, AGED, TOTAL, DEPENDENCY)`: It selects specific columns (PA, SZ, YOUNG, ECONOMY ACTIVE, AGED, TOTAL, DEPENDENCY) from the dataset to include in the final popdata2020 dataset.
+
+```{r}
+popdata2020 <- popdata %>%
+  filter(Time == 2020) %>%
+  group_by(PA, SZ, AG) %>%
+  summarise(`POP` = sum(`Pop`)) %>%
+  ungroup()%>%
+  pivot_wider(names_from=AG, 
+              values_from=POP) %>%
+  mutate(YOUNG = rowSums(.[3:6])
+         +rowSums(.[12])) %>%
+mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+
+rowSums(.[13:15]))%>%
+mutate(`AGED`=rowSums(.[16:21])) %>%
+mutate(`TOTAL`=rowSums(.[3:21])) %>%  
+mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)
+/`ECONOMY ACTIVE`) %>%
+  select(`PA`, `SZ`, `YOUNG`, 
+       `ECONOMY ACTIVE`, `AGED`, 
+       `TOTAL`, `DEPENDENCY`)
+
+popdata2020
+```
+
+### Joining the attribute data and geospatial data
+
+Things to note:
+
+-   Changing values to uppercase is a common practice in data preparation when you anticipate performing string-based operations, comparisons, or joins. In the context of georelational joins or any join operation, ensuring consistent case (uppercase or lowercase) in the joining fields is crucial for accurate and successful matches
+
+```{r}
+popdata2020 <- popdata2020 %>%
+  mutate_at(.vars = vars(PA, SZ), 
+          .funs = list(toupper)) %>%
+  filter(`ECONOMY ACTIVE` > 0)
+```
+
+Then we will combine them together with left join
+
+-   Using a left join in this context implies that you want to retain all the rows from the left data frame (**`mpsz`**) in the result, regardless of whether there is a matching row in the right data frame (**`popdata2020`**). If there is a match, the corresponding values from the right data frame will be included; otherwise, the columns from the right data frame will have **`NA`** values.
+
+```{r}
+mpsz_pop2020 <- left_join(mpz, popdata2020,
+                          by = c("SUBZONE_N" = "SZ"))
+```
+
+### Saving R object into rds file
+
+`write_rds()`: This is a function in R that is part of the readr package. It is used to write an R object to an RDS file.
+
+```{r}
+write_rds(mpsz_pop2020, "../../data/Week2/rds/mpszpop2020.rds")
+```
+
+## Chloropleth mapping
+
+### qtm()
+
+Explanation of code:
+
+-   `qtm()`: This function stands for "Quick thematic map." It is a simple way to create a choropleth map using tmap.
+-   `tmap_mode()`: There are a few modes
+    -   view: Interactive mode
+    -   plot: static viewing mode
+    -   window: Graph will be opened on another window
+-   mpsz_pop2020: This is the data frame used for creating the map.
+-   `fill = "DEPENDENCY"`: This specifies the variable to use for filling the map polygons. In this case, the color of each polygon will be determined by the values in the "DEPENDENCY" column of the mpsz_pop2020 data frame.
+
+```{r}
+tmap_mode("plot")
+qtm(mpsz_pop2020, 
+    fill = "DEPENDENCY")
+```
+
+To make it on view mode
+
+-   `tmap_options(check.and.fix = TRUE)` before creating the map to enable automatic checking and fixing of the shapefile:
+
+```{r}
+tmap_options(check.and.fix = TRUE)
+tmap_mode("view")
+qtm(mpsz_pop2020, 
+    fill = "DEPENDENCY")
+```
+
+### Chloropleth map with map elements
+
+Explanation of the code:
+
+-   `tm_shape(mpsz_pop2020):` tm_shape() is a function that defines the geographical data to be used for mapping. Here, it specifies the mpsz_pop2020 data frame as the source for the map.
+
+-   `tm_fill("DEPENDENCY", style = "quantile", palette = "Blues", title = "Dependency ratio"):` tm_fill() is used to specify how the polygons should be filled based on a specific variable.
+
+    -   In this case, it fills the polygons based on the "DEPENDENCY" column of mpsz_pop2020.
+
+    -   style = "quantile" specifies the coloring style as quantile.
+
+    -   palette = "Blues" defines the color palette to be used (Blues).
+
+    -   title = "Dependency ratio" sets the legend title.
+
+-   `tm_layout(...)`: tm_layout() is used to customize the layout and appearance of the map.
+
+    -   `main.title` specifies the main title of the map. `main.title.position` sets the position of the main title ("center" in this case).
+
+    -   `main.title.size` adjusts the font size of the main title. `legend.height` and `legend.width` control the size of the legend. `frame = TRUE` adds a frame around the map.
+
+-   `tm_borders(alpha = 0.5):` tm_borders() adds borders to the map, and alpha = 0.5 sets the transparency level of the borders.
+
+-   `tm_compass(type = "8star", size = 2)`: tm_compass() adds a compass to the map. type = "8star" specifies the type of compass (8-point star). size = 2 sets the size of the compass.
+
+-   `tm_scale_bar()`: tm_scale_bar() adds a scale bar to the map.
+
+-   `tm_grid(alpha = 0.2)`: tm_grid() adds a grid to the map. alpha = 0.2 sets the transparency level of the grid.
+
+-   `tm_credits(...):` tm_credits() adds credits or a data source attribution to the map. The text provided in the argument specifies the source of the masp data.
+
+```{r}
+tm_shape(mpsz_pop2020)+
+  tm_fill("DEPENDENCY", 
+          style = "quantile", 
+          palette = "Blues",
+          title = "Dependency ratio") +
+  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            frame = TRUE) +
+  tm_borders(alpha = 0.5) +
+  tm_compass(type="8star", size = 2) +
+  tm_scale_bar() +
+  tm_grid(alpha =0.2) +
+  tm_credits("Source: Planning Sub-zone boundary from Urban Redevelopment Authorithy (URA)\n and Population data from Department of Statistics DOS", 
+             position = c("left", "bottom"))
+```
+
+When to use `tm_polygon()` and when to use `tm_fill():` - tm_polygons() is a wraper of tm_fill() and tm_border(). tm_fill() shades the polygons by using the default colour scheme and tm_borders() adds the borders of the shapefile onto the choropleth map.
+
+-   Use tm_polygons() When:
+
+    -   You want to customize general polygon properties, such as borders, labels, or text, without focusing on fill color based on a variable.
+
+-   Use tm_fill() When:
+
+    -   You specifically want to customize how the interior of the polygons should be colored based on a variable. It is useful for creating choropleth maps where color represents the values of a particular variable.
+
+```{r}
+tm_shape(mpsz_pop2020) +
+  tm_polygons("DEPENDENCY")
+
+tm_shape(mpsz_pop2020) +
+  tm_fill("DEPENDENCY")
+```
+
+Viewing how `tm_fill()` and `tm_borders()` works:
+
+-   `lwd` sets the line width of the borders. The default is 1.
+-   `alpha` sets the transparency level of the borders
+-   `col` sets the border colour
+-   `lty` sets the border line type. The default is “solid”.
+
+```{r}
+tm_shape(mpsz_pop2020) +
+  tm_fill("DEPENDENCY") +
+  tm_borders(lwd=1.4, alpha=0.2) +
+  tmap_mode("plot")
+```
+
+### Customising the classes
+
+Important to note:
+
+-   Usually we will ensure to compute and display the descriptive statistics
+
+```{r}
+summary(mpsz_pop2020$DEPENDENCY)
+```
+
+In R, the \$ symbol is used for extracting a specific variable from a data frame. It is called the "dollar sign operator" and is used to access columns or variables within a data frame.
+
+```{r}
+tm_shape(mpsz_pop2020)+
+  tm_fill("DEPENDENCY",
+          breaks = c(0, 0.60, 0.70, 0.80, 0.90, 1.00)) +
+  tm_borders(alpha=0.5)
+```
+
+### Map legend
+
+Explanation of the code:
+
+-   `tm_fill("DEPENDENCY", style = "jenks", palette = "Blues"` `legend.hist = TRUE, legend.is.portrait = TRUE, legend.hist.z = 0.1):`
+    -   `tm_fill()` is used to fill the polygons on the map based on a specific variable ("DEPENDENCY").
+    -   `style = "jenks"` sets the classification method to Jenks natural breaks.
+    -   `palette = "Blues"` defines the color palette to be used.
+    -   `legend.hist = TRUE` adds a histogram to the legend.
+    -   `legend.is.portrait = TRUE` arranges the legend in portrait mode.
+    -   `legend.hist.z = 0.1` sets the transparency of the histogram in the legend.
+-   `tm_layout(main.title = ..., main.title.position = ..., main.title.size = ..., legend.height = ..., legend.width = ..., legend.outside = ..., legend.position = ..., frame = ...)`:
+    -   `tm_layout()` is used to customize the layout and appearance of the map.
+    -   `main.title` sets the main title of the map.
+    -   `main.title.position` sets the position of the main title.
+    -   `main.title.size` adjusts the font size of the main title.
+    -   `legend.height` and `legend.width` control the size of the legend.
+    -   `legend.outside` determines whether the legend is placed outside the map.
+    -   `legend.position` sets the position of the legend.
+    -   `frame` controls whether a frame is added around the map.
+
+```{r}
+tm_shape(mpsz_pop2020)+
+  tm_fill("DEPENDENCY", 
+          style = "jenks", 
+          palette = "Blues", 
+          legend.hist = TRUE, 
+          legend.is.portrait = TRUE,
+          legend.hist.z = 0.1) +
+  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone \n(Jenks classification)",
+            main.title.position = "center",
+            main.title.size = 1,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            legend.outside = FALSE,
+            legend.position = c("right", "bottom"),
+            frame = FALSE) +
+  tm_borders(alpha = 0.5)
+```
+
+## Drawing Small Multiple Choropleth Maps
+
+The example below shows multiple choropleth maps via aesthetic arguments
+
+```{r}
+tm_shape(mpsz_pop2020)+
+  tm_fill(c("YOUNG", "AGED"),
+          style = "equal", 
+          palette = "Blues") +
+  tm_layout(legend.position = c("right", "bottom")) +
+  tm_borders(alpha = 0.5) +
+  tmap_style("white")
+```
+
+The example below shows mutliple choropleth maps via tm_facets()
+
+Explanation of the code below:
+
+-   `thres.poly = 0` sets a threshold for polygon size, indicating that polygons with an area below this threshold should not be filled.
+-   `free.coords = TRUE` allows the facets to have different coordinate systems. When you set free.coords = TRUE in the tm_facets() function (as in your code snippet), it allows facets to have different coordinate systems. However, this is generally not recommended unless you have a specific reason for doing so. Using different coordinate systems can distort the spatial representation, making it challenging for viewers to accurately compare the facets.
+-   `drop.shapes = TRUE` drops facets with no data.
+
+```{r}
+tm_shape(mpsz_pop2020) +
+  tm_fill("DEPENDENCY",
+          style = "quantile",
+          palette = "Blues",
+          thres.poly = 0) + 
+  tm_facets(by="REGION_N", 
+            free.coords=TRUE, 
+            drop.shapes=TRUE) +
+  tm_layout(legend.show = FALSE,
+            title.position = c("center", "center"), 
+            title.size = 20) +
+  tm_borders(alpha = 0.5)
+```
+
+This is an example of creating multiple choropleths map via tmap_arrange()
+
+Explanation of the code:
+
+-   `asp = 1` ensures that the aspect ratio of the individual maps is preserved.
+-   `ncol = 2` specifies that the arrangement should have 2 columns, meaning the maps will be displayed side by side.
+
+```{r}
+youngmap <- tm_shape(mpsz_pop2020)+ 
+  tm_polygons("YOUNG", 
+              style = "quantile", 
+              palette = "Blues")
+
+agedmap <- tm_shape(mpsz_pop2020)+ 
+  tm_polygons("AGED", 
+              style = "quantile", 
+              palette = "Blues")
+
+tmap_arrange(youngmap, agedmap, asp=1, ncol=2)
+tmap_arrange(youngmap, agedmap, asp = 1, nrow = 2)
+```
+
